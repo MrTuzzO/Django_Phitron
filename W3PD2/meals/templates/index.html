@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block mainBody %}
+
+<section class="container my-5">
+    <div class="row gy-4">
+        {% for meal in  data%}
+        <div class="col-lg-3">
+            <div class="card" >
+                <img src="{{meal.strMealThumb}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{meal.strMeal}}</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+{% endblock mainBody %}
