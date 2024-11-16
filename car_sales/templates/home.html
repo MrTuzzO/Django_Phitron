@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row py-3 d-flex align-items-center gx-4">
+        <div class="col-md-6">
+            <p class="">
+                <strong>CarMart,</strong> a trusted name in the automotive industry, offers a diverse range of quality used cars. From
+                compact sedans to spacious SUVs, they cater to various preferences and lifestyles. CarMart prioritizes
+                transparency and customer satisfaction by providing detailed vehicle history reports and conducting
+                rigorous inspections. Their flexible financing options and dedicated customer service make the
+                car-buying process smooth and convenient. Whether you're a first-time buyer or an experienced car
+                enthusiast, CarMart is your go-to destination for reliable used cars.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <img src="static/banner_img.webp">
+        </div>
+    </div>
+    <div class="mt-4">
+        <p class="h5">Brands: </p>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="brand" id="all"
+                   {% if not selected_brand %}checked{% endif %}>
+            <label class="form-check-label" for="all">
+                <a class="link" href="{% url 'home' %}">All</a>
+            </label>
+        </div>
+        {% for brand in brands %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="brand" id="{{ brand.slug }}"
+                       {% if selected_brand and selected_brand.id == brand.id %}checked{% endif %}>
+                <label class="form-check-label" for="{{ brand.slug }}">
+                    <a href="{% url 'brand_filter' brand.slug %}">{{ brand.brand_name }}</a>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    {% if data.count > 0 %}
+        <p>Cars available: {{ data.count }}</p>
+    {% else %}
+        <p>No cars are available.</p>
+    {% endif %}
+    <div class="row">
+        {% for car in data %}
+            <div class="col-sm-3 mb-4">
+                <div class="card">
+                    {% if car.car_image %}
+                        <img style="height: 200px; object-fit: cover" src="{{ car.car_image.url }}" alt="{{ car.name }}"
+                             style="width:200px;height:150px;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.name }}</h5>
+                        <p>
+                            <b>Price</b>: ${{ car.price }} <br>
+                            Brand: {{ car.brand }}
+                        </p>
+                        <p class="card-text">{{ car.description }}</p>
+                        <a href="{% url 'car_details' car.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

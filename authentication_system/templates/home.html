@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>Wellcome <span class="text-success">{% if request.user.is_authenticated %}
+		{{ user.first_name }} {{ user.last_name }}
+	{% else %}
+        Anonymous User
+	{% endif %} </span></h1>
+{% endblock %}
